@@ -1,0 +1,44 @@
+# dependencies
+**/node_modules/
+jspm_packages/
+
+common/changes/
+common/scripts/
+common/config/
+common/temp/
+**/.rush/temp
+**/CHANGELOG.*
+
+# testing
+/coverage
+
+# production
+**/build
+**/dist
+**/lib
+build/Release
+
+# misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.tgz
+.npm
+.lock-wscript
+.heft
+.eslintcache
+.node_repl_history
+.yarn-integrity
+.next
+
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+shrinkwrap.json
+
+*[-.]{debug|error|build}.log*
+
+**/*.md

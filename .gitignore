@@ -1,0 +1,45 @@
+# dependencies
+**/node_modules/
+jspm_packages/
+
+common/deploy/
+common/temp/
+common/autoinstallers/*/.npmrc
+**/.rush/temp/
+rush-logs/
+
+/docs/input
+
+# testing
+/coverage
+
+# production
+**/build
+**/dist
+**/.data
+**/tsconfig.build.tsbuildinfo
+public/media
+public/tmp
+
+!.gitkeep
+
+# misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.tgz
+.npm
+.lock-wscript
+.heft
+.eslintcache
+.node_repl_history
+.yarn-integrity
+.next
+
+*-debug.log*
+*-error.log*
+*.build.log*
+*.error.log*
