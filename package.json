@@ -8,6 +8,7 @@
   "scripts": {
   },
   "dependencies": {
+    "sharp": "^0.33.3",
   },
   "devDependencies": {
     "typescript": "^5.2.2"
