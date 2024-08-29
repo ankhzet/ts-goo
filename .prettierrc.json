@@ -6,4 +6,5 @@
     "singleQuote": true,
     "bracketSpacing": true,
     "arrowParens": "always",
+    "plugins": ["./common/autoinstallers/rush-lint/node_modules/prettier-plugin-packagejson/lib/index.js"]
 }
