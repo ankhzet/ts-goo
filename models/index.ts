@@ -100,6 +100,14 @@ export class Layer extends Model<ILayer, InferCreationAttributes<Layer>> {
     @Default(false)
     declare enabled: boolean;
 
+    @Attribute(DataTypes.BOOLEAN)
+    @Default(false)
+    declare mirrorX: boolean;
+
+    @Attribute(DataTypes.BOOLEAN)
+    @Default(false)
+    declare mirrorY: boolean;
+
     @Attribute(DataTypes.STRING(255))
     @NotNull
     declare type: LayerType;

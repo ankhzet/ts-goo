@@ -15,13 +15,14 @@ export const BoardRender = ({ layers, scale }: PropsWithChildren<{ layers: ILaye
 
     const content = (
         <group rotation={[Math.PI, 0, 0]} scale={[scale, scale, 0]}>
-            {layers.map(({ id, enabled, geometryUrl, index }) => enabled && (
+            {layers.map(({ id, enabled, geometryUrl, index, mirrorX, mirrorY }) => enabled && (
                 <Sprite
                     key={id}
                     src={geometryUrl}
                     opacity={index === activeLayer ? 1 : 0.5}
                     offset={{ x: 0, y: 0, z: layers.length - index - 1 }}
                     scale={{ x: 1, y: 1 }}
+                    mirror={{ x: mirrorX, y: mirrorY }}
                 />
             ))}
         </group>

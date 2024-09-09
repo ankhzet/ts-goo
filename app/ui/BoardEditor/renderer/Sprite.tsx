@@ -26,6 +26,7 @@ interface SpriteProps {
     offset: Vector3Like;
     scale: Vector2Like;
     frame?: Vector2Like;
+    mirror?: { x: boolean; y: boolean };
 }
 
 const TextureSprite = ({
@@ -83,7 +84,7 @@ const TextureSprite = ({
     );
 };
 
-const GroupSprite = ({ asset: { group }, color, opacity, offset, scale }: SpriteProps & {
+const GroupSprite = ({ asset: { group, width, height }, color, opacity, offset, scale, mirror, frame }: SpriteProps & {
     asset: THREEAssetElement
 }) => {
     const ref = useRef<Group>(null!);
@@ -104,9 +105,19 @@ const GroupSprite = ({ asset: { group }, color, opacity, offset, scale }: Sprite
         ref.current!.traverse((child: unknown) => {
             if (child instanceof Mesh) {
                 child.material.opacity = opacity;
+
+                if (mirror?.x) {
+                    child.scale.x = -1;
+                    child.position.x = width;
+                }
+
+                if (mirror?.y) {
+                    child.scale.y = -1;
+                    child.position.y = height;
+                }
             }
         });
-    }, [opacity]);
+    }, [opacity, mirror?.x, mirror?.y]);
 
     return (
         <group

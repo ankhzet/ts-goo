@@ -16,8 +16,10 @@ export function EditLayerForm({ layer }: { layer: ILayer }) {
                 <LayerIndexField name="index" value={layer.index} />
                 <LayerTypeField name="type" value={layer.type} />
                 <ToggleField name="enabled" label="Enabled" value={layer.enabled} />
+                <ToggleField name="mirrorX" label="Mirror X" value={layer.mirrorX} />
+                <ToggleField name="mirrorY" label="Mirror Y" value={layer.mirrorY} />
                 <TextField name="name" label="Layer name" value={layer.name} />
-                <FileField name="geometryUrl" label="Layer geometry" value={layer.geometryUrl} />
+                <FileField name="geometryUrl" label="Layer geometry" value={layer.geometryUrl} mirrorX={layer.mirrorX} mirrorY={layer.mirrorY} />
             </div>
 
             <div className="mt-6 flex justify-end gap-4">

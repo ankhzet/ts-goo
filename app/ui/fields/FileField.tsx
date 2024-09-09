@@ -10,9 +10,11 @@ export interface FileFieldProps {
     multiple?: boolean;
     width?: number | string;
     height?: number | string;
+    mirrorX?: boolean;
+    mirrorY?: boolean;
 }
 
-export const FileField = ({ name, value, label, multiple, width = 'auto', height = 100, ...rest }: FileFieldProps) => {
+export const FileField = ({ name, value, label, multiple, width = 'auto', height = 100, mirrorX, mirrorY, ...rest }: FileFieldProps) => {
     const [image, setImage] = useState<string | undefined>(value);
 
     const uploadToServer = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +61,7 @@ export const FileField = ({ name, value, label, multiple, width = 'auto', height
                             src={image}
                             alt={`${name} preview`}
                             style={{ width, height, objectFit: 'contain' }}
-                            className="block w-full rounded-md border border-gray-200 text-sm outline-2"
+                            className={`block w-full rounded-md border border-gray-200 text-sm outline-2 ${mirrorX ? 'scale-x-[-1]' : ''} ${mirrorY ? 'scale-y-[-1]' : ''}`}
                         />
                     ) : (
                         <PhotoIcon width={100} />
