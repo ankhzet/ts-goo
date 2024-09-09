@@ -25,7 +25,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     },
                 ]}
             />
-            <EditLayerForm layer={layer} />
+            <EditLayerForm layer={layer.toJSON()} />
         </main>
     );
 }
