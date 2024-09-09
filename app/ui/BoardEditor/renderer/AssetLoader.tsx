@@ -3,7 +3,7 @@ import { useThree } from '@react-three/fiber';
 import { Group, Mesh, ShapeGeometry, ShapePath } from 'three';
 import { SVGLoader } from 'three-stdlib';
 
-import { useStateFromProp } from '../../hooks/useStateFromProp';
+import { useStateFromProp } from '../../hooks';
 import { AssetLoaderContext, assets, AssetType, kTheeAsset, THREEAssetElement } from './AssetLoaderContext';
 import { Overlay } from './Overlay';
 import { getLengthFromSVGLength, isLike, makeMaterials } from './svg';

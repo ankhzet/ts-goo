@@ -114,10 +114,10 @@ export async function createLayer(formData: FormData) {
 
 export async function updateLayer(id: string, formData: FormData) {
     const { geometryUrl, ...data } = UpdateLayer.parse(Object.fromEntries(formData.entries()));
-    const board = await Layer.findByPk(id, { rejectOnEmpty: true });
+    const layer = await Layer.findByPk(id, { rejectOnEmpty: true });
 
-    if (geometryUrl && geometryUrl !== board.geometryUrl) {
-        await applyUpload(makeAssetPath(geometryUrl), makeAssetPath(board.geometryUrl));
+    if (geometryUrl && geometryUrl !== layer.geometryUrl) {
+        await applyUpload(makeAssetPath(geometryUrl), makeAssetPath(layer.geometryUrl));
         data.geometry = path.basename(geometryUrl);
     }
 

@@ -1,11 +1,11 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ReactNode, useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 
 export interface FileFieldProps {
     name: string;
-    label: React.ReactNode;
+    label: ReactNode;
     value?: string;
     multiple?: boolean;
     width?: number | string;
