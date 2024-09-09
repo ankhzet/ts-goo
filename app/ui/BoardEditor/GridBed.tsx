@@ -41,7 +41,7 @@ export const GridBed = ({ width, height }: GridBedProps) => {
         };
     });
     return (
-        <group>
+        <group position={[0, 0, -1]}>
             <Plane
                 args={[width, height]}
                 position-z={-1}
@@ -55,10 +55,10 @@ export const GridBed = ({ width, height }: GridBedProps) => {
                 fadeStrength={0}
                 cellColor="#aaaaaa"
                 cellSize={scale / 10}
-                cellThickness={0.5}
+                cellThickness={1}
                 sectionSize={scale / 2}
                 sectionColor="#ffffff"
-                sectionThickness={1}
+                sectionThickness={1.5}
                 side={BackSide}
                 rotation={[Math.PI / 2, 0, 0]}
                 args={[width, height]}
