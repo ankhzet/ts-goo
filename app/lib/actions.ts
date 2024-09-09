@@ -127,7 +127,8 @@ export async function updateLayer(id: string, formData: FormData) {
     );
 
     revalidatePath('/dashboard/layers');
-    redirect('/dashboard/layers');
+    revalidatePath(`/dashboard/boards/${layer.boardId}/edit`);
+    redirect(`/dashboard/boards/${layer.boardId}/edit`);
 }
 
 export async function deleteLayer(id: string) {
