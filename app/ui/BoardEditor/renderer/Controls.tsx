@@ -61,7 +61,7 @@ const usePanLimits = ({ controls, min, max }: { controls: OrbitControlsImpl, min
         }
 
         const camera = controls.object;
-        camera.position.set(0, 0, 500);
+        camera.position.set(0, 0, 100);
         controls.target.set(0, 0, 0);
         controls.update();
         camera.rotateX(Math.PI / 2);
@@ -85,9 +85,11 @@ const usePanLimits = ({ controls, min, max }: { controls: OrbitControlsImpl, min
             max: { x: 40, y: 0 },
         });
 
+        // @ts-ignore
         controls.addEventListener('change', handler);
 
         return () => {
+            // @ts-ignore
             controls.removeEventListener('change', handler);
         };
     }, [controls, min, max]);

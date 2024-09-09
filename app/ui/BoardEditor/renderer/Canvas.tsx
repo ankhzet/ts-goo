@@ -12,16 +12,18 @@ export const Canvas = ({ assets, children, ...rest }: PropsWithChildren<{ assets
         <Renderer
             frameloop="demand"
             camera={{
-                position: [0, 0, 500],
+                position: [0, 0, 100],
                 zoom: 10,
-                near: 0.01,
+                near: 0.1,
                 far: 100,
                 up: [0, 0, 1],
             }}
             orthographic
             gl={{
-                antialias: false,
+                antialias: true,
                 pixelRatio: globalThis.devicePixelRatio,
+                depth: true,
+                logarithmicDepthBuffer: true,
             }}
             style={{ width: 'auto', height: 'auto', background: '#1e1e1e' }}
             onContextMenu={(e) => e.preventDefault()}

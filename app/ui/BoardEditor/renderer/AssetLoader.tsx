@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import { Group, Mesh, ShapeGeometry, ShapePath } from 'three';
-import { SVGLoader } from 'three-stdlib';
+import { mergeBufferGeometries, SVGLoader } from 'three-stdlib';
 
 import { useStateFromProp } from '../../hooks';
 import { AssetLoaderContext, assets, AssetType, kTheeAsset, THREEAssetElement } from './AssetLoaderContext';
@@ -44,6 +44,12 @@ const FACTORIES = [
 
                     const width = getLengthFromSVGLength(xml.width);
                     const height = getLengthFromSVGLength(xml.height);
+                    const bg = new Group();
+                    const fg = new Group();
+
+                    group.add(fg, bg);
+
+                    fg.position.z = -0.1;
 
                     asset.width = width || 0;
                     asset.height = height || 0;
@@ -70,7 +76,7 @@ const FACTORIES = [
                             },
                         );
 
-                        group.add(new Mesh(frameGeometry, frame));
+                        bg.add(new Mesh(frameGeometry, frame));
 
                         // group.add(new Mesh(new ShapeGeometry(path.toShapes(false)), frame));
                     }
@@ -86,10 +92,18 @@ const FACTORIES = [
                         const stroke = material(style.stroke, style.strokeOpacity);
 
                         if (fill) {
+                            const isBlack = !fill.color.getHex();
                             const shapes = SVGLoader.createShapes(path);
+                            const geometry = mergeBufferGeometries(shapes.map((shape) => new ShapeGeometry(shape), fill));
 
-                            for (const shape of shapes) {
-                                group.add(new Mesh(new ShapeGeometry(shape), fill));
+                            if (geometry) {
+                                const mesh = new Mesh(geometry, fill);
+
+                                if (isBlack) {
+                                    bg.add(mesh);
+                                } else {
+                                    fg.add(mesh);
+                                }
                             }
                         }
 
@@ -100,7 +114,7 @@ const FACTORIES = [
                             );
 
                             if (geometry) {
-                                group.add(new Mesh(geometry, stroke));
+                                fg.add(new Mesh(geometry, stroke));
                             }
 
                             // for (const subPath of path.subPaths) {
@@ -195,6 +209,7 @@ export const AssetLoader = ({ urls: urlsProp, placeholder, children }: AssetLoad
     }, [urls]);
 
     if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
             const delay = 2000 + uniqueUrls.current!.size * 100;
 

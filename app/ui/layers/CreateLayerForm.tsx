@@ -13,6 +13,7 @@ export function CreateLayerForm({ boards, board }: { boards: IBoard[], board?: I
                 <LayerIndexField name="index" />
                 <LayerTypeField name="type" />
                 <ToggleField name="enabled" label="Enabled" value />
+                <ToggleField name="invert" label="Inverted" />
                 <ToggleField name="mirrorX" label="Mirror X" />
                 <ToggleField name="mirrorY" label="Mirror Y" />
                 <TextField name="name" label="Layer name" />

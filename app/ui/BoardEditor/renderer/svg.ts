@@ -1,4 +1,13 @@
-import { Color, DoubleSide, Material, MeshBasicMaterial } from 'three';
+import {
+    BackSide,
+    Color,
+    DoubleSide,
+    FrontSide,
+    GreaterEqualDepth,
+    LessDepth,
+    Material,
+    MeshBasicMaterial, OneMinusDstColorFactor, OneMinusSrcColorFactor, SrcAlphaFactor,
+} from 'three';
 
 export const isLike = <T>(value: unknown | T): value is T => {
     return !!value;
@@ -86,7 +95,7 @@ export const getLengthFromSVGLength = (l: SVGAnimatedLength) => convertLength(
 );
 
 export const makeMaterials = () => {
-    const materials: Record<string, Material> = {};
+    const materials: Record<string, MeshBasicMaterial> = {};
     const hash = (color: Color, opacity?: number) => `${color.getHex()}-${opacity || 1}`;
 
     return (colorStr: string, opacity?: number) => {
@@ -99,13 +108,11 @@ export const makeMaterials = () => {
         let got = materials[key];
 
         if (!got) {
-            const isBlack = !color.getHex();
             got = new MeshBasicMaterial({
                 color,
-                opacity: isBlack ? 0.2 : opacity,
+                opacity,
                 transparent: true,
                 side: DoubleSide,
-                depthWrite: false,
                 // wireframe: isBlack,
             });
 

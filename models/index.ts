@@ -102,6 +102,10 @@ export class Layer extends Model<ILayer, InferCreationAttributes<Layer>> {
 
     @Attribute(DataTypes.BOOLEAN)
     @Default(false)
+    declare invert: boolean;
+
+    @Attribute(DataTypes.BOOLEAN)
+    @Default(false)
     declare mirrorX: boolean;
 
     @Attribute(DataTypes.BOOLEAN)
@@ -131,6 +135,13 @@ export const db = new Sequelize({
     dialect: 'sqlite',
     storage: '.data/database.sqlite',
     models: [Board, Layer],
+    sync: {
+        alter: {
+            drop: false,
+        },
+    },
 });
 
-// await db.sync({});
+// await db.sync({
+//     force: true,
+// });

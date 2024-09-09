@@ -1,13 +1,12 @@
-import Image from 'next/image';
-
 import type { IBoard } from '@/models';
 import { fetchFilteredLayers } from '@/app/lib/data';
 import { Pagination } from '@/app/ui';
+import { Preview } from '../Preview';
 import { LayerType } from './LayerType';
-import { CreateLayer, DeleteLayer, UpdateLayer } from './buttons';
+import { DeleteLayer, UpdateLayer } from './buttons';
 
 export async function LayersTable({ board, query, currentPage }: { board?: IBoard; query: string; currentPage: number }) {
-    const { layers, pages } = await fetchFilteredLayers(void 0, query, currentPage);
+    const { layers, pages } = await fetchFilteredLayers(board?.id, query, currentPage);
 
     return (
         <>
@@ -44,13 +43,16 @@ export async function LayersTable({ board, query, currentPage }: { board?: IBoar
                                 >
                                     <td className="whitespace-nowrap py-3 pl-6 pr-3">
                                         <div className="flex items-center gap-3">
-                                            <Image
+                                            <Preview
                                                 src={layer.geometryUrl}
-                                                className="rounded-full"
                                                 width={28}
                                                 height={28}
                                                 alt={`${layer.name}'s geometry`}
+                                                mirrorX={layer.mirrorX}
+                                                mirrorY={layer.mirrorY}
+                                                invert={layer.invert}
                                             />
+
                                             <p>{layer.name}</p>
                                         </div>
                                     </td>

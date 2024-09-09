@@ -1,20 +1,16 @@
 'use client';
 
 import { ChangeEvent, ReactNode, useState } from 'react';
-import { PhotoIcon } from '@heroicons/react/24/solid';
+import { Preview, PreviewProps } from '../Preview';
 
-export interface FileFieldProps {
+export interface FileFieldProps extends Omit<PreviewProps, 'src' | 'alt'> {
     name: string;
     label: ReactNode;
     value?: string;
     multiple?: boolean;
-    width?: number | string;
-    height?: number | string;
-    mirrorX?: boolean;
-    mirrorY?: boolean;
 }
 
-export const FileField = ({ name, value, label, multiple, width = 'auto', height = 100, mirrorX, mirrorY, ...rest }: FileFieldProps) => {
+export const FileField = ({ name, value, label, multiple, width = 'auto', height = 100, mirrorX, mirrorY, invert, ...rest }: FileFieldProps) => {
     const [image, setImage] = useState<string | undefined>(value);
 
     const uploadToServer = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -55,18 +51,14 @@ export const FileField = ({ name, value, label, multiple, width = 'auto', height
 
             <label htmlFor={`file${name}`} className="mb-2 block text-sm font-medium">{label}</label>
             <div className="relative mt-2 rounded-md">
-                <div className="relative w-fit h-fit mb-2">
-                    {image ? (
-                        <img
-                            src={image}
-                            alt={`${name} preview`}
-                            style={{ width, height, objectFit: 'contain' }}
-                            className={`block w-full rounded-md border border-gray-200 text-sm outline-2 ${mirrorX ? 'scale-x-[-1]' : ''} ${mirrorY ? 'scale-y-[-1]' : ''}`}
-                        />
-                    ) : (
-                        <PhotoIcon width={100} />
-                    )}
-                </div>
+                <Preview
+                    className="mb-2"
+                    src={image}
+                    alt={`${name} preview`}
+                    mirrorX={mirrorX}
+                    mirrorY={mirrorY}
+                    invert={invert}
+                />
                 <div className="relative">
                     <input
                         id={`file${name}`}

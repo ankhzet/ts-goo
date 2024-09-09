@@ -22,6 +22,7 @@ const geometry = new PlaneGeometry(1, 1);
 
 interface SpriteProps {
     color?: string | number;
+    fill?: string | number;
     opacity: number;
     offset: Vector3Like;
     scale: Vector2Like;
@@ -50,7 +51,7 @@ const TextureSprite = ({
             depthWrite: false,
             fog: false,
             flatShading: true,
-            precision: 'lowp',
+            precision: 'highp',
         }),
         [color, opacity],
     );
@@ -84,10 +85,12 @@ const TextureSprite = ({
     );
 };
 
-const GroupSprite = ({ asset: { group, width, height }, color, opacity, offset, scale, mirror, frame }: SpriteProps & {
+const GroupSprite = ({ asset: { group, width, height }, color, fill, opacity, offset, scale, mirror, frame }: SpriteProps & {
     asset: THREEAssetElement
 }) => {
     const ref = useRef<Group>(null!);
+    const colorRef = useMemo(() => color === 'none' ? null : new Color(color), [color]);
+    const fillRef = useMemo(() => fill === 'none' ? null :new Color(fill), [fill]);
 
     useEffect(() => {
         const current = ref.current;
@@ -102,22 +105,77 @@ const GroupSprite = ({ asset: { group, width, height }, color, opacity, offset, 
     }, [group]);
 
     useEffect(() => {
-        ref.current!.traverse((child: unknown) => {
-            if (child instanceof Mesh) {
-                child.material.opacity = opacity;
+        if (!(ref.current && (mirror?.x || mirror?.y))) {
+            return;
+        }
 
-                if (mirror?.x) {
+        ref.current.traverse((child: unknown) => {
+            if (child instanceof Mesh) {
+                if (mirror.x) {
                     child.scale.x = -1;
                     child.position.x = width;
                 }
 
-                if (mirror?.y) {
+                if (mirror.y) {
                     child.scale.y = -1;
                     child.position.y = height;
                 }
             }
         });
-    }, [opacity, mirror?.x, mirror?.y]);
+    }, [mirror?.x, mirror?.y]);
+
+    useEffect(() => {
+        ref.current!.traverse((child: unknown) => {
+            if (child instanceof Mesh) {
+                const um = (m: MeshBasicMaterial | MeshBasicMaterial[]) => {
+                    if (Array.isArray(m)) {
+                        m.forEach(um);
+                    } else {
+                        m.opacity = opacity;
+                    }
+                };
+
+                if (child.material) {
+                    um(child.material);
+                }
+            }
+        });
+    }, [opacity]);
+
+    useEffect(() => {
+        ref.current!.traverse((child: unknown) => {
+            if (child instanceof Mesh) {
+                const um = (m: MeshBasicMaterial | MeshBasicMaterial[]) => {
+                    if (Array.isArray(m)) {
+                        m.forEach(um);
+                    } else {
+                        m.opacity = opacity;
+
+                        if (m.color.getHex()) {
+                            if (colorRef) {
+                                m.color = colorRef;
+                                m.visible = true;
+                            } else {
+                                // m.opacity = 0.1 * opacity;
+                            }
+                        } else {
+                            if (fillRef) {
+                                m.color = fillRef;
+                                m.visible = true;
+                            } else {
+                                m.visible = false;
+                                // m.opacity = 0.1 * opacity;
+                            }
+                        }
+                    }
+                };
+
+                if (child.material) {
+                    um(child.material);
+                }
+            }
+        });
+    }, [opacity, colorRef?.getHex(), fillRef?.getHex()]);
 
     return (
         <group

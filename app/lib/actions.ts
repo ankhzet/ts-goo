@@ -85,6 +85,7 @@ const LayerFormSchema = z.object({
     boardId: z.string(),
     index: z.coerce.number(),
     enabled: z.coerce.number().transform((v) => !!v),
+    invert: z.coerce.number().transform((v) => !!v),
     mirrorX: z.coerce.number().transform((v) => !!v),
     mirrorY: z.coerce.number().transform((v) => !!v),
     type: z.enum(LAYER_TYPES),
