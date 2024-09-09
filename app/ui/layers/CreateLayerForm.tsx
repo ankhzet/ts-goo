@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { IBoard } from '@/models';
 import { Button } from '@/app/ui/button';
 import { createLayer } from '@/app/lib/actions';
-import { LayerTypeField, LayerIndexField, BoardField, FileField, TextField } from '../fields';
+import { LayerTypeField, LayerIndexField, BoardField, FileField, TextField, ToggleField } from '../fields';
 
 export function CreateLayerForm({ boards, board }: { boards: IBoard[], board?: IBoard }) {
     return (
@@ -12,6 +12,7 @@ export function CreateLayerForm({ boards, board }: { boards: IBoard[], board?: I
                 <BoardField name="boardId" boards={boards} value={board?.id} disabled={!!board} />
                 <LayerIndexField name="index" />
                 <LayerTypeField name="type" />
+                <ToggleField name="enabled" label="Enabled" value />
                 <TextField name="name" label="Layer name" />
                 <FileField name="geometryUrl" label="Layer geometry" />
             </div>

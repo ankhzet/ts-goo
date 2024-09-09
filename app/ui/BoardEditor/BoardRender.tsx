@@ -15,7 +15,7 @@ export const BoardRender = ({ layers, scale }: PropsWithChildren<{ layers: ILaye
 
     const content = (
         <group rotation={[Math.PI, 0, 0]} scale={[scale, scale, 0]}>
-            {layers.map(({ id, geometryUrl, index }) => (
+            {layers.map(({ id, enabled, geometryUrl, index }) => enabled && (
                 <Sprite
                     key={id}
                     src={geometryUrl}

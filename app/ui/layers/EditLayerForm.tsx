@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ILayer } from '@/models';
 import { Button } from '@/app/ui/button';
 import { updateLayer } from '@/app/lib/actions';
-import { LayerTypeField, LayerIndexField, BoardField, TextField, FileField } from '../fields';
+import { LayerTypeField, LayerIndexField, TextField, FileField, ToggleField } from '../fields';
 
 export function EditLayerForm({ layer }: { layer: ILayer }) {
     const updateWithId = updateLayer.bind(null, layer.id);
@@ -15,6 +15,7 @@ export function EditLayerForm({ layer }: { layer: ILayer }) {
             <div className="rounded-md bg-gray-50 p-4 md:p-6">
                 <LayerIndexField name="index" value={layer.index} />
                 <LayerTypeField name="type" value={layer.type} />
+                <ToggleField name="enabled" label="Enabled" value={layer.enabled} />
                 <TextField name="name" label="Layer name" value={layer.name} />
                 <FileField name="geometryUrl" label="Layer geometry" value={layer.geometryUrl} />
             </div>

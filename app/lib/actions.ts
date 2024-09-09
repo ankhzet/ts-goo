@@ -84,6 +84,7 @@ const LayerFormSchema = z.object({
     id: z.string(),
     boardId: z.string(),
     index: z.coerce.number(),
+    enabled: z.coerce.number().transform((v) => !!v),
     type: z.enum(LAYER_TYPES),
     name: z.string(),
     geometry: z.string().optional(),

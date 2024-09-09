@@ -96,6 +96,10 @@ export class Layer extends Model<ILayer, InferCreationAttributes<Layer>> {
     @NotNull
     declare index: number;
 
+    @Attribute(DataTypes.BOOLEAN)
+    @Default(false)
+    declare enabled: boolean;
+
     @Attribute(DataTypes.STRING(255))
     @NotNull
     declare type: LayerType;
