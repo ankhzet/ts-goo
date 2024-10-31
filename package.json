@@ -1,8 +1,8 @@
 {
     "name": "@ankhzet/goo",
     "author": "AnkhZet ankhzet@gmail.com",
-    "description": "AnkhZet Elegoo .goo file format reader/writer",
-    "version": "0.0.1",
+    "description": "Elegoo .goo file format reader/writer",
+    "version": "0.0.2",
     "type": "module",
     "private": false,
     "scripts": {
@@ -17,7 +17,7 @@
         "lint:fix": "pnpm run lint -- --fix",
         "prepublishOnly": "pnpm run build && rm -f ./dist/cjs/*.tsbuildinfo && rm -f ./dist/esm/*.tsbuildinfo"
     },
-    "keywords": ["elegoo", "reader", "writer", "parser"],
+    "keywords": ["elegoo", "goo", "reader", "writer", "parser", "typescript"],
     "homepage": "https://github.com/ankhzet/ts-goo",
     "repository": "ankhzet/ts-goo",
     "module": "./lib/index.ts",

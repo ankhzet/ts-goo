@@ -208,7 +208,7 @@ try {
 }
 ```
 
-## Defining printer descriptions
+## Printer definitions
 ```ts
 const PRINTER_MARS_4_ULTRA_9K: PrinterDefinition = {
     name: 'ELEGOO Mars 4 Ultra 9K',
@@ -226,7 +226,8 @@ const PRINTER_MARS_4_ULTRA_9K: PrinterDefinition = {
 
 ## Filling `Goo` structure
 
-When constructing `Goo` instance, image fields can be either paths to the file, or actual image data:
+When constructing `Goo` instance, image fields can be either paths to the file (all formats supported by `sharp` library out of the box should be supported),
+or actual image color channels data:
 ```ts
 type ImageChannels = 1|2|3|4;
 type ImageDescriptor = string | {
@@ -241,7 +242,7 @@ Previews:
 const previewPath = path.resolve('<path>/preview.png');
 
 // 116 and 290 are hardcoded in the `.goo` specification
-const previews = [116, 290].map((size): GooPreview => ({
+const previews = [116, 290].map((size) => ({
     dimensions: { x: size, y: size },
     input: previewPath,
 }));
@@ -249,7 +250,7 @@ const previews = [116, 290].map((size): GooPreview => ({
 
 Layers:
 ```ts
-// images of slices themselves (should support all formats supported by `sharp` library out of the box)
+// images of slices themselves
 const slicePaths = [
     path.resolve('<path>/layer-0.png'),
     path.resolve('<path>/layer-1.png'),
@@ -259,10 +260,11 @@ const slicePaths = [
 // depends on printer, resin, timings etc.
 const layerHeight = 0.05;
 
-// all settings in this example are tuned for a one-layer `.goo` file (i've used it to burn PCB pattern on the photoresist)
-const layers: GooLayer[] = slicePaths.map((slice, index): GooLayer => ({
+// all settings in this example are tuned for a one-layer `.goo` file, used to burn PCB pattern on the photoresist
+const layers = slicePaths.map((slice, index) => ({
     // slice image path
     slice,
+
     // all fields have documentation, with value types specified (seconds, pixels, mm etc.)
     definition: {
         pause: {

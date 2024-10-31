@@ -21,8 +21,8 @@ import { BinaryWriter } from './BinaryWriter.js';
 import { CRC8 } from './CRC8.js';
 
 const GENERATOR = {
-    description: 'AnkhZet Elegoo .goo file format reader/writer',
-    version: '0.0.1',
+    description: 'AnkhZetGoo',
+    version: '0.0.2',
 };
 
 export class GooWriter {
