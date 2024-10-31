@@ -1,59 +1,58 @@
 {
-  "name": "@ankhzet/goo",
-  "description": "AnkhZet Goo file Adapter",
-  "author": "AnkhZet ankhzet@gmail.com",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "next build",
-    "dev": "next dev",
-    "prettier": "prettier --write --ignore-unknown .",
-    "prettier:check": "prettier --check --ignore-unknown .",
-    "start": "next start",
-    "seed": "tsx -r dotenv/config ./scripts/seed.ts",
-    "test:write": "tsx -r dotenv/config ./scripts/goo-test.ts",
-    "test:debug": "tsx --inspect -r dotenv/config ./scripts/goo-test.ts"
-  },
-  "dependencies": {
-    "@heroicons/react": "^2.0.18",
-    "@react-three/drei": "^9.112.0",
-    "@react-three/fiber": "^8.17.7",
-    "@sequelize/core": "alpha",
-    "@tailwindcss/forms": "^0.5.9",
-    "@types/three": "^0.168.0",
-    "bcrypt": "^5.1.1",
-    "clsx": "^2.0.0",
-    "next": "^14.2.8",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "reflect-metadata": "^0.2.2",
-    "sharp": "^0.33.5",
-    "sqlite3": "^5.1.7",
-    "three": "^0.168.0",
-    "three-stdlib": "^2.32.2",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.1",
-    "@types/node": "^18.15.3",
-    "@types/react": "^18.3.5",
-    "@types/react-dom": "^18.3.0",
-    "@types/validator": "^13.12.1",
-    "@vercel/style-guide": "^5.2.0",
-    "autoprefixer": "^10.4.20",
-    "dotenv": "^16.4.5",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.8",
-    "eslint-config-prettier": "^9.1.0",
-    "postcss": "8.4.31",
-    "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.5.14",
-    "tailwindcss": "^3.4.10",
-    "tsx": "^4.19.0",
-    "typescript": "^5.6.2"
-  },
-  "engines": {
-    "node": ">=18.17.0"
-  }
+    "name": "@ankhzet/goo",
+    "author": "AnkhZet ankhzet@gmail.com",
+    "description": "AnkhZet Elegoo .goo file format reader/writer",
+    "version": "0.0.1",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "build": "pnpm run build:cjs && pnpm run build:esm",
+        "build:cjs": "tsc -p tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > './dist/cjs/package.json'",
+        "build:esm": "tsc -p tsconfig.esm.json && echo '{ \"type\": \"module\" }' > './dist/esm/package.json'",
+        "format": "prettier --write --ignore-unknown .",
+        "format:check": "prettier --check --ignore-unknown .",
+        "test:write": "tsx ./tests/goo.test.ts",
+        "test:debug": "tsx --inspect ./tests/goo.test.ts",
+        "lint": "eslint '**/*.ts'",
+        "lint:fix": "pnpm run lint -- --fix",
+        "prepublishOnly": "pnpm run build && rm -f ./dist/cjs/*.tsbuildinfo && rm -f ./dist/esm/*.tsbuildinfo"
+    },
+    "keywords": ["elegoo", "reader", "writer", "parser"],
+    "homepage": "https://github.com/ankhzet/ts-goo",
+    "repository": "ankhzet/ts-goo",
+    "module": "./lib/index.ts",
+    "types": "./lib/index.ts",
+    "files": [
+        "dist",
+        "LICENSE",
+        "README.md"
+    ],
+    "dependencies": {
+        "sharp": "^0.33.5"
+    },
+    "devDependencies": {
+        "@types/node": "^18.15.3",
+        "@torque/eslint-config": "^1.3.0",
+        "eslint": "^9.13.0",
+        "eslint-config-prettier": "^9.1.0",
+        "prettier": "^3.3.3",
+        "tsx": "^4.19.2",
+        "typescript": "^5.6.3"
+    },
+    "publishConfig": {
+        "exports": {
+            ".": {
+                "types": "./dist/esm/index.d.ts",
+                "default": "./dist/esm/index.js",
+                "import": "./dist/esm/index.js",
+                "require": "./dist/cjs/index.js"
+            }
+        },
+        "types": "./dist/esm/index.d.ts",
+        "main": "./dist/cjs/index.js",
+        "module": "./dist/esm/index.js"
+    },
+    "engines": {
+        "node": ">=18.17.0"
+    }
 }
