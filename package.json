@@ -4,7 +4,6 @@
     "description": "AnkhZet Elegoo .goo file format reader/writer",
     "version": "0.0.1",
     "type": "module",
-    "private": true,
     "scripts": {
         "build": "pnpm run build:cjs && pnpm run build:esm",
         "build:cjs": "tsc -p tsconfig.cjs.json && echo '{ \"type\": \"commonjs\" }' > './dist/cjs/package.json'",
