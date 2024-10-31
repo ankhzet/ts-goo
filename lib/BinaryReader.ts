@@ -1,4 +1,4 @@
-import { assert, printBuffer } from './utils';
+import { assert, printBuffer } from './utils.js';
 import { FileHandle } from 'node:fs/promises';
 
 export type BinaryReadable = {

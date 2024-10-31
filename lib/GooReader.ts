@@ -10,12 +10,12 @@ import type {
     GooLayer,
     LayerDefinition,
     GooPreview,
-} from './interfaces';
-import { assert, rgba8888Buffer, formatBytes } from './utils';
-import { GOO_VERSION, GOO_MAGIC, GOO_DELIMITER } from './magics';
-import { BinaryReader } from './BinaryReader';
-import { rleDecode } from './rle';
-import { CRC8 } from './CRC8';
+} from './interfaces.js';
+import { assert, rgba8888Buffer, formatBytes } from './utils.js';
+import { GOO_VERSION, GOO_MAGIC, GOO_DELIMITER } from './magics.js';
+import { BinaryReader } from './BinaryReader.js';
+import { rleDecode } from './rle/index.js';
+import { CRC8 } from './CRC8.js';
 
 export class GooReader {
     protected reader: BinaryReader;

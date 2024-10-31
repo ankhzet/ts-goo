@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 
-import { SliceTransform, PrinterDefinition, MotionConfig, GooLayer } from './interfaces';
+import { SliceTransform, PrinterDefinition, MotionConfig, GooLayer } from './interfaces.js';
 
 const format = new Intl.DateTimeFormat('en-EN', {
     hourCycle: 'h24',

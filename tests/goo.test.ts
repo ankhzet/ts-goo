@@ -1,20 +1,10 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
-import {
-    GooWriter,
-    BinaryWriter,
-    Goo,
-    PrinterDefinition,
-    GooLayer,
-    SliceTransform,
-    GooPreview,
-    BinaryReader,
-    GooReader,
-    saveImage,
-} from '../app/lib';
-import { printBuffer, layerTime } from '../app/lib/goo/utils';
-import { version, description } from '@/package.json' assert { type: 'json' };
+import type { Goo, GooLayer, GooPreview, PrinterDefinition, SliceTransform } from '../lib';
+import { BinaryReader, BinaryWriter, GooReader, GooWriter, saveImage } from '../lib';
+import { layerTime, printBuffer } from '../lib/utils';
+import { description, version } from '../package.json' assert { type: 'json' };
 
 const PRINTER_MARS_4_ULTRA_9K: PrinterDefinition = {
     name: 'ELEGOO Mars 4 Ultra 9K',
@@ -102,7 +92,7 @@ const makeGoo = (printer: PrinterDefinition, previews: GooPreview[], layers: Goo
                             bottom: {
                                 distance: 0,
                                 speed: 0,
-                            }
+                            },
                         },
                         retract: {
                             common: {
@@ -134,12 +124,12 @@ const makeGoo = (printer: PrinterDefinition, previews: GooPreview[], layers: Goo
 };
 
 const makeLayer = ({ imagePath: slice, exposure, height, z, transform }: {
-    imagePath: string;
-    exposure: number;
-    z: number;
-    height: number;
-    transform?: SliceTransform;
-}
+        imagePath: string;
+        exposure: number;
+        z: number;
+        height: number;
+        transform?: SliceTransform;
+    },
 ): GooLayer => ({
     definition: {
         pause: {
@@ -210,7 +200,7 @@ const makeLayers = (n: number, { resolution: { x: width } }: PrinterDefinition) 
                 },
             },
         });
-    })
+    });
 };
 
 const readBack = process.argv.indexOf('--read');
@@ -227,22 +217,11 @@ const goo = makeGoo(PRINTER_MARS_4_ULTRA_9K, previews, makeLayers(1, PRINTER_MAR
 await fs.rm(outPath, { force: true });
 const out = await fs.open(outPath, 'w+');
 
-let offset = 0;
-const consume = async (buffer: Buffer) => {
-    // printBuffer(buffer);
-    offset += buffer.length;
-    return out.write(buffer);
-};
-
-for await (const buffer of gooWriter.write(goo)) {
-    await consume(
-        (buffer instanceof Buffer)
-            ? buffer
-            : buffer(offset)
-    );
+try {
+    await gooWriter.write(goo, (buffer) => out.write(buffer));
+} finally {
+    await out.close();
 }
-
-await out.close();
 
 if (readBack) {
     const binaryReader = new BinaryReader(await fs.open(outPath));

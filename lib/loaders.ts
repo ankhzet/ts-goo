@@ -1,7 +1,7 @@
 import sharp from 'sharp';
 
-import type { Vec2, SliceTransform, PrinterDefinition, ImageDescriptor } from './interfaces';
-import { promisify, transformInCoordinateSystem } from './utils';
+import type { Vec2, SliceTransform, PrinterDefinition, ImageDescriptor } from './interfaces.js';
+import { promisify, transformInCoordinateSystem } from './utils.js';
 
 export const loadPreview = async (pathname: string, { x, y }: Vec2<number>) => (
     sharp(pathname, { pages: 1 })

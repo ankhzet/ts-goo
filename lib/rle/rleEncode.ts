@@ -1,4 +1,4 @@
-import { encoder } from './encoder';
+import { encoder } from './encoder.js';
 
 export const rleEncode = (buffer: Buffer, channels: number): Buffer => {
     let offset = 0;

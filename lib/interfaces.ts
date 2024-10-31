@@ -124,7 +124,7 @@ export type GooPreview = {
 
 export type GooHeader = {
     date: Date;
-    generator: {
+    generator?: {
         description: string;
         version: string;
     };
