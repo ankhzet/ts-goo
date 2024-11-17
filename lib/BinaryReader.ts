@@ -1,9 +1,5 @@
-import { assert, printBuffer } from './utils.js';
-import { FileHandle } from 'node:fs/promises';
-
-export type BinaryReadable = {
-    read(buffer: Buffer, target: number, length: number): Promise<{ buffer: Buffer; bytesRead: number }>;
-}
+import type { FileHandle } from 'node:fs/promises';
+import { assert } from './utils.js';
 
 export class BinaryReader {
     private readable: FileHandle;

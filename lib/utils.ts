@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 
-import { SliceTransform, PrinterDefinition, MotionConfig, GooLayer } from './interfaces.js';
+import type { SliceTransform, PrinterDefinition, MotionConfig, GooLayer } from './interfaces.js';
 
 const format = new Intl.DateTimeFormat('en-EN', {
     hourCycle: 'h24',
@@ -147,7 +147,7 @@ export const assert: (value: unknown, message: string) => asserts value = (value
     }
 };
 
-const motionTime = (config: MotionConfig) => config.distance / (config.speed || 1);
+export const motionTime = (config: MotionConfig) => config.distance / (config.speed || 1);
 
 export const layerTime = ({ definition: { exposure, times, motions } }: GooLayer) => (
     exposure +
