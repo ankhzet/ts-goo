@@ -3,6 +3,15 @@
 
 ## Reading from `.goo` files
 ```ts
+// interfaces/types
+import type { Goo, GooLayer, GooPreview, PrinterDefinition } from '@ankhzet/goo';
+// stream helpers
+import { BinaryReader, BinaryWriter } from '@ankhzet/goo';
+// format encoder/decoder
+import { GooWriter, GooReader } from '@ankhzet/goo';
+// utils
+import { layerTime, saveImage, printBuffer } from '@ankhzet/goo';
+
 const filePath = path.resolve('./test.goo');
 const binaryReader = new BinaryReader(await fs.open(filePath));
 const gooReader = new GooReader(binaryReader);
@@ -324,7 +333,7 @@ const layers = slicePaths.map((slice, index) => ({
 
 `Goo`:
 ```ts
-const goo = {
+const goo: Goo = {
     header: {
         date: new Date(),
         printer: PRINTER_MARS_4_ULTRA_9K,
