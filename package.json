@@ -25,7 +25,8 @@
     "files": [
         "dist",
         "LICENSE",
-        "README.md"
+        "README.md",
+        "CHANGELOG.md"
     ],
     "dependencies": {
         "sharp": "^0.33.5"
