@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 
 import type { Goo, GooLayer, GooPreview, PrinterDefinition, SliceTransform } from '../lib';
 import { BinaryReader, BinaryWriter, GooReader, GooWriter, saveImage } from '../lib';
-import { layerTime, printBuffer } from '../lib/utils';
+import { layerTime } from '../lib/utils';
 import { description, version } from '../package.json' assert { type: 'json' };
 
 const PRINTER_MARS_4_ULTRA_9K: PrinterDefinition = {
